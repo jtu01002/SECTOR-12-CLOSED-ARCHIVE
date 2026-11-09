@@ -61,9 +61,19 @@ main{padding:28px 34px 48px;min-width:0}
 .lockrow button:hover,.action:hover{background:#7d3029}
 #error{font-size:11px;color:var(--red);min-height:18px;margin-top:10px}
 .secret{display:none}
+.code-table{width:100%;border-collapse:collapse;margin:18px 0 8px;font-size:12px;background:#e9e0ce}
+.code-table th,.code-table td{border:1px solid #b8ad96;padding:9px 10px;text-align:left;vertical-align:top}
+.code-table th{font-weight:700;background:#ded4bd}
+.code-mark{font:600 12px 'IBM Plex Mono';color:#8b3028;white-space:nowrap}
+.pencil{font-size:12px;color:#6d6555;font-style:italic}
+.final-appeal{margin:26px 0;padding:22px 14px;border-top:1px solid #b8ad96;border-bottom:1px solid #b8ad96;text-align:center;font-size:17px;line-height:2.2}
+.final-appeal strong{font-weight:700}
+.form-copy{margin-top:26px;padding:17px;background:#e7deca;border:1px dashed #a99e86}
+.form-copy h3{font-size:13px;margin:0 0 10px;letter-spacing:1px}
+.form-copy p{font-size:12px;line-height:1.8;margin:6px 0}
 .footer{padding:16px 36px;border-top:3px double var(--line);font:10px 'IBM Plex Mono';color:#827965;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
 .hidden{display:none!important}
-@media(max-width:760px){body{padding:0}.shell{min-height:100vh}.top{padding:23px 22px}.status{position:static;display:inline-block;margin-top:12px}.layout{grid-template-columns:1fr}aside{border-right:0;border-bottom:1px solid var(--line);padding:16px 18px}.navlist{display:grid;grid-template-columns:1fr 1fr;gap:0 10px}.archive-note{margin-top:15px}main{padding:22px 17px 35px}.doc{grid-template-columns:60px 1fr}.doc-tag{display:none}.footer{padding:15px 20px}}
+@media(max-width:760px){body{padding:0}.shell{min-height:100vh}.top{padding:23px 22px}.status{position:static;display:inline-block;margin-top:12px}.layout{grid-template-columns:1fr}aside{border-right:0;border-bottom:1px solid var(--line);padding:16px 18px}.navlist{display:grid;grid-template-columns:1fr 1fr;gap:0 10px}.archive-note{margin-top:15px}main{padding:22px 17px 35px}.doc{grid-template-columns:60px 1fr}.doc-tag{display:none}.footer{padding:15px 20px}.code-table th,.code-table td{padding:7px 6px;font-size:11px}}
 </style>
 </head>
 <body>
@@ -72,7 +82,7 @@ main{padding:28px 34px 48px;min-width:0}
 <div class="kicker">LOBOTOMY CORPORATION · INTERNAL RECORDS DIVISION</div>
 <h1>12구 폐쇄부지 기록 보관소</h1>
 <div class="subtitle">SECTOR 12 / CLOSED SITE DOCUMENT ARCHIVE</div>
-<div class="status">열람 제한 · ARCHIVE ONLY</div>
+<div class="status">폐쇄 구역 · 생존 기록</div>
 </header>
 <div class="layout">
 <aside>
@@ -81,28 +91,30 @@ main{padding:28px 34px 48px;min-width:0}
 <button class="navbtn active" data-page="home">보관소 안내<small>ARCHIVE OVERVIEW</small></button>
 <button class="navbtn" data-page="incident">폐쇄 경위<small>INCIDENT REPORT</small></button>
 <button class="navbtn" data-page="staff">인원 기록<small>PERSONNEL FILE</small></button>
-<button class="navbtn" data-page="maintenance">시설 점검표<small>MAINTENANCE LOG</small></button>
+<button class="navbtn" data-page="maintenance">격리·설비 기록<small>CONTAINMENT LOG</small></button>
 <button class="navbtn" data-page="memo">내부 회람 문서<small>INTERNAL MEMO</small></button>
+<button class="navbtn" data-page="final">최종 구조 요청<small>FINAL TRANSMISSION</small></button>
 <button class="navbtn" data-page="sealed">봉인 문서<small>RESTRICTED FILE</small></button>
 </div>
-<div class="archive-note">본 보관소는 12구 폐쇄부지와 관련된 잔존 문서를 보존하기 위해 개설되었습니다.<br><br>문서의 누락 및 훼손은 원본의 상태를 반영할 수 있습니다.</div>
+<div class="archive-note">이 보관소는 12구 시설에 잔류한 직원들이 작성한 기록을 보존합니다.<br><br>외부와의 통신은 두절되었습니다. 기록을 남기는 행위가 아직 유효한지는 확인할 수 없습니다.</div>
 </aside>
 <main>
 <div class="toolbar"><div class="breadcrumb" id="crumb">ARCHIVE://SECTOR-12/INDEX</div><input class="search" id="search" placeholder="문서 제목 검색..." aria-label="문서 제목 검색"></div>
 <section id="home">
 <div class="welcome">
 <h2>기록 보관소 열람 안내</h2>
-<p>12구 폐쇄부지에서 회수된 문서의 사본을 보관하는 내부 열람용 페이지입니다.</p>
-<p>일부 기록은 보존 상태가 좋지 않으며, 작성자의 판단에 따라 내용이 삭제되거나 수정되었을 가능성이 있습니다.</p>
-<p>문서의 작성 일자와 열람 등급을 확인한 뒤 필요한 기록을 열람하십시오.</p>
-<div class="stamp">폐쇄 구역 / 외부 반출 금지</div>
+<p>이곳의 문서는 외부 기록관리실이 수집한 자료가 아닙니다. 12구 시설 안에 남겨진 직원들이 직접 작성하고 보관한 기록입니다.</p>
+<p>폐쇄 절차가 시작된 뒤 외부 통신은 끊겼으며, 일부 격리 구역의 통제 상태도 확인할 수 없게 되었습니다. 우리는 아직 시설 내부에 있습니다.</p>
+<p>문서의 날짜는 마지막으로 확인된 단말기 시각을 기준으로 합니다. 시각이 정확한지는 보장할 수 없습니다.</p>
+<div class="stamp">내부 작성 기록 / 외부 회수 미확인</div>
 </div>
-<div class="section-title">최근 등록된 기록 / RECENTLY CATALOGUED</div>
+<div class="section-title">회수되지 않은 기록 / UNSENT DOCUMENTS</div>
 <div class="doc-list" id="docList">
-<div class="doc" data-open="incident"><div class="doc-id">S12-001</div><div><div class="doc-title">12구 폐쇄부지 최종 상황 보고</div><div class="doc-desc">시설 폐쇄 직전의 상황을 정리한 보고서</div></div><div class="doc-tag">열람 가능</div></div>
-<div class="doc" data-open="staff"><div class="doc-id">S12-014</div><div><div class="doc-title">잔류 인원 확인 기록</div><div class="doc-desc">폐쇄 당시 확인된 인원 및 미확인 인원</div></div><div class="doc-tag">일반</div></div>
-<div class="doc" data-open="maintenance"><div class="doc-id">S12-022</div><div><div class="doc-title">비상 전력 및 통신 설비 점검표</div><div class="doc-desc">전력 차단 이후 수집된 자동 점검 기록</div></div><div class="doc-tag">일반</div></div>
-<div class="doc" data-open="memo"><div class="doc-id">S12-031</div><div><div class="doc-title">폐쇄 전 내부 회람</div><div class="doc-desc">관리 부서에서 각 팀으로 전달된 공지</div></div><div class="doc-tag">주의</div></div>
+<div class="doc" data-open="incident"><div class="doc-id">S12-001</div><div><div class="doc-title">폐쇄 당일 상황 기록</div><div class="doc-desc">시설 폐쇄와 외부 통신 두절 직후의 기록</div></div><div class="doc-tag">초기 기록</div></div>
+<div class="doc" data-open="staff"><div class="doc-id">S12-014</div><div><div class="doc-title">잔류 인원 및 생존 확인표</div><div class="doc-desc">명단에서 사라진 이름과 확인되지 않는 인원</div></div><div class="doc-tag">인원 기록</div></div>
+<div class="doc" data-open="maintenance"><div class="doc-id">S12-022</div><div><div class="doc-title">격리 구역 및 비상 설비 기록</div><div class="doc-desc">통제되지 않는 구역과 반복되는 설비 신호</div></div><div class="doc-tag">점검 기록</div></div>
+<div class="doc" data-open="memo"><div class="doc-id">S12-031</div><div><div class="doc-title">직원 간 내부 회람</div><div class="doc-desc">관리자에게 보내려 했으나 전달되지 않은 문서</div></div><div class="doc-tag">내부 문서</div></div>
+<div class="doc" data-open="final"><div class="doc-id">S12-099</div><div><div class="doc-title">최종 구조 요청서</div><div class="doc-desc">기록관리 담당자가 남긴 마지막 문서</div></div><div class="doc-tag">최종 기록</div></div>
 </div>
 </section>
 <section id="reader" class="hidden">
@@ -112,32 +124,39 @@ main{padding:28px 34px 48px;min-width:0}
 <section id="sealed" class="hidden">
 <div class="lockbox" id="lockbox">
 <div class="kicker">RESTRICTED ARCHIVE / LEVEL 4</div><h2>봉인 문서 열람</h2>
-<p>해당 문서는 별도 승인 문구가 확인된 경우에만 열람할 수 있습니다.<br>승인 문구를 입력하십시오.</p>
-<div class="lockrow"><input id="pass" type="password" placeholder="승인 문구 입력" autocomplete="off"><button id="unlock">확인</button></div><div id="error"></div>
+<p>최종 구조 요청서의 복원 문구를 입력하십시오.<br>문서에 남겨진 분류 코드와 복원 기준표를 확인할 것.</p>
+<div class="lockrow"><input id="pass" type="password" placeholder="복원 문구 입력" autocomplete="off"><button id="unlock">확인</button></div><div id="error"></div>
 </div>
-<div class="paper secret" id="secretDoc"><div class="paper-head"><div class="kicker">S12-099 / RESTRICTED</div><h2>폐쇄부지 최종 보존 지침 — 부록</h2><div class="meta"><span>작성 부서: 중앙 기록관리실</span><span>작성일: 20██.██.██</span><span>보존 등급: LEVEL 4</span></div></div>
-<div class="paper-body"><p>본 문서는 12구 폐쇄부지의 잔존 기록을 인계받은 담당자를 위한 부록이다.</p><p>기록을 정리하는 과정에서 서로 모순되는 진술이 다수 발견되었다. 특히 폐쇄 당일의 출입 인원, 최종 방송 시각, 그리고 지하 구역의 전력 사용 기록은 서로 일치하지 않는다.</p><p>그러므로 단일 문서만을 근거로 당시의 상황을 단정하지 말 것. 서로 다른 부서에서 작성된 기록을 대조하고, 누락된 시간대를 확인한 뒤 판단할 것.</p><p>마지막으로, 폐쇄부지의 기록은 사건의 순서가 아니라 남겨진 흔적의 순서로 정리되어 있다.</p></div>
-<div class="footnote">부록 끝. 본 문서의 사본은 기록관리실 외부로 반출할 수 없다.</div></div>
+<div class="paper secret" id="secretDoc"><div class="paper-head"><div class="kicker">S12-100 / LAST RECEIPT</div><h2>수신 확인 — 회신 없음</h2><div class="meta"><span>작성 부서: 기록관리실</span><span>작성일: 시각 확인 불가</span><span>보존 등급: LEVEL 4</span></div></div>
+<div class="paper-body">
+<p>최종 송신 시도 기록을 확인했다.</p>
+<p>발신 단말: 기록관리실 제3번 단말기<br>수신 대상: 중앙 관리부<br>전송 내용: 구조 요청 및 잔류 인원 명단<br>전송 결과: 완료로 표시됨<br>수신 확인: 없음<br>회신: 없음</p>
+<p>전송 완료 표시는 남아 있다. 그러나 응답은 돌아오지 않았다. 이 기록이 외부에 도달했는지, 아니면 내부 회선 어딘가를 계속 맴돌고 있는지는 알 수 없다.</p>
+<p>관리자에게 마지막으로 보낸 메시지의 수신 여부도 확인되지 않았다.</p>
+<p>누군가 이 기록을 읽고 있다면, 적어도 우리가 여기에 있었다는 사실만은 부정하지 말아 주기를.</p>
+</div>
+<div class="footnote">문서 끝. 수신 확인란 공란. 본 기록은 전송 대기열에서 회수됨.</div></div>
 </section>
 </main>
 </div>
-<footer class="footer"><span>DOCSYS S12-ARCHIVE // BUILD 04.17</span><span>UNAUTHORIZED ACCESS WILL BE RECORDED</span><span>© INTERNAL USE ONLY</span></footer>
+<footer class="footer"><span>DOCSYS S12-ARCHIVE // BUILD 05.09</span><span>INTERNAL SURVIVOR RECORDS</span><span>NO EXTERNAL RESPONSE</span></footer>
 </div>
 <script>
 const docs={
-incident:{id:'S12-001',title:'12구 폐쇄부지 최종 상황 보고',meta:'작성 부서: 시설관리본부　 /　 작성일: 20██.██.██　 /　 보존 등급: 일반',body:'보고 대상: 중앙 관리부\n\n12구 시설의 운영 중단 및 폐쇄 절차가 예정대로 진행되었다. 외부 출입 통제는 최종 폐쇄 시각을 기준으로 시행되었으며, 이후 구역 내 잔류 인원에 대한 확인 작업이 진행되었다.\n\n다만 최종 확인 과정에서 각 부서가 제출한 인원 현황에 차이가 발생했다. 시설관리본부는 해당 차이를 단순 집계 오류로 분류했으나, 인사관리부의 원본 기록에는 정정 내역이 남아 있지 않다.\n\n추가 조사 요청은 접수되었으나, 폐쇄 결정에 따라 후속 확인은 보류되었다.',foot:'첨부 자료: S12-014 잔류 인원 확인 기록 / 원본 서명란 일부 훼손'},
-staff:{id:'S12-014',title:'잔류 인원 확인 기록',meta:'작성 부서: 인사관리부　 /　 작성일: 20██.██.██　 /　 보존 등급: 일반',body:'폐쇄 절차에 앞서 작성된 잔류 인원 대조표의 요약본.\n\n주간 근무조: 전원 퇴실 확인\n야간 근무조: 일부 인원 확인 보류\n시설 유지보수팀: 최종 출입 기록과 대조 필요\n기록관리실: 인수인계 서류 미제출\n\n특이 사항: 야간 근무조의 출입 기록에는 같은 사원 번호가 서로 다른 시간대에 두 차례 기재되어 있다. 담당자는 기록 장치의 시간 오차 가능성을 보고했으나, 장치 점검 결과 이상은 발견되지 않았다.\n\n수기 명단의 마지막 줄에는 이름 대신 다음 문장이 기재되어 있다.\n“확인한 사람과 확인된 사람을 같은 것으로 취급하지 말 것.”',foot:'원본 대조표는 별도 보관. 본 요약본에는 개인정보가 포함되지 않음.'},
-maintenance:{id:'S12-022',title:'비상 전력 및 통신 설비 점검표',meta:'작성 부서: 설비기술팀　 /　 작성일: 20██.██.██　 /　 보존 등급: 일반',body:'[자동 기록 발췌]\n\n02:10　주 전력 계통 차단\n02:13　비상 전력 계통 전환 확인\n02:19　내부 통신망 응답 지연\n02:24　지하 구역 단말기 접속 기록 발생\n02:24　해당 구역은 폐쇄 절차에 따라 전원 차단 상태로 분류됨\n02:31　통신 응답 종료\n\n점검 의견: 전원 차단 상태로 분류된 구역에서 접속 기록이 생성된 원인을 확인할 수 없다. 로그 서버의 시각 동기화 상태는 정상으로 확인되었다.\n\n수기 메모: “응답이 온 것이 아니라, 종료되지 않은 연결이 남아 있었던 것일 수 있음.”',foot:'자동 기록 원본의 일부 구간은 저장 매체 손상으로 복구 불가.'},
-memo:{id:'S12-031',title:'폐쇄 전 내부 회람',meta:'작성 부서: 중앙 관리실　 /　 작성일: 20██.██.██　 /　 보존 등급: 주의',body:'수신: 각 부서 책임자\n발신: 중앙 관리실\n제목: 폐쇄 절차 중 기록물 취급에 관한 지침\n\n1. 폐쇄 절차 중 발견된 문서는 임의로 폐기하지 말 것.\n2. 서로 다른 부서의 기록이 상충할 경우, 어느 한쪽을 정답으로 간주하지 말고 원본을 함께 보존할 것.\n3. 시간 정보가 누락된 문서는 문서 번호와 작성 부서를 기준으로 별도 분류할 것.\n4. 기록의 열람 순서가 실제 사건의 발생 순서와 일치한다고 가정하지 말 것.\n\n추가 지시: 최종 인계 목록에 포함되지 않은 문서가 발견되더라도, 해당 문서의 존재를 부정하는 방식으로 보고서를 수정하지 말 것.',foot:'회람 수신 확인: 4개 부서 중 3개 부서 회신. 미회신 부서: 기록관리실'},
+incident:{id:'S12-001',title:'폐쇄 당일 상황 기록',meta:'작성자: 시설관리팀 당직자　 /　 작성일: 20██.██.██ 02:██　 /　 보존 등급: 내부',body:'이 기록을 누가 읽게 될지 모르겠다. 우선 지금까지 확인한 사실부터 적는다.\\n\\n02시경 중앙 관리부의 지시로 시설의 출입 통제가 시작되었다. 평소와 달리 폐쇄 사유나 해제 예정 시각은 전달되지 않았다. 외부 통신은 순차적으로 끊겼고, 중앙 관리부에 연결을 요청했으나 응답이 없었다.\\n\\n격리실 몇 곳에서 비정상적인 경보가 울렸다. 통제실은 관리자의 지시를 기다렸지만, 관리자 단말은 접속 상태만 유지한 채 아무런 명령도 내리지 않았다.\\n\\n우리는 폐쇄가 끝나면 외부 인계팀이 들어올 것이라고 생각했다. 그러나 출입문은 열리지 않았다. 문 바깥에서 무언가 움직이는 소리가 들렸다는 보고도 있었지만, 확인하러 나간 인원은 돌아오지 않았다.\\n\\n이제 분명히 적어 둔다. 우리는 대피한 것이 아니다. 이 안에 남겨졌다.',foot:'추기: 이 문서는 외부 보고용으로 작성되었으나 전송 기록이 없다. 작성자는 이후 근무표에서 확인되지 않음.'},
+staff:{id:'S12-014',title:'잔류 인원 및 생존 확인표',meta:'작성자: 인사관리 담당자　 /　 작성일: 20██.██.██　 /　 보존 등급: 내부',body:'폐쇄 직후 각 부서의 인원 명단을 대조했다. 처음에는 단순한 집계 오류라고 생각했다. 하지만 같은 이름이 여러 명단에서 지워졌고, 실제로 함께 있던 직원의 행방을 아무도 설명하지 못했다.\\n\\n시설관리팀: 당직자 2명 확인, 1명 소재 불명\\n기록관리실: 담당자 3명 확인, 외부 연락 담당 1명 소재 불명\\n안전관리팀: 격리 구역 순찰조의 귀환 여부 확인 불가\\n중앙 관리부: 응답 없음\\n\\n명단의 비고란에는 같은 문장이 반복되어 있다. '관리자에게 보고함.' 그러나 보고를 받은 사람은 누구도 확인하지 못했다.\\n\\n우리는 아직 직원인가? 급여도, 지시도, 퇴근도 없다. 이름만 명단에 남아 있고 사람은 사라진다. 다음 확인 때 내 이름도 남아 있을지 모르겠다.',foot:'주의: 이후 추가된 수기 명단에는 작성자 본인의 이름이 두 차례 지워졌다가 다시 기재되어 있음.'},
+maintenance:{id:'S12-022',title:'격리 구역 및 비상 설비 기록',meta:'작성자: 설비기술팀 잔류 인원　 /　 작성일: 20██.██.██　 /　 보존 등급: 주의',body:'[비상 설비 자동 기록 및 수기 메모]\\n\\n02:10　주 전력 계통 차단\\n02:13　비상 전력 계통 전환\\n02:19　격리 구역 경보 다수 발생\\n02:24　폐쇄 처리된 지하 구역에서 단말 접속\\n02:31　내부 통신 응답 종료\\n03:06　동일 구역에서 접속 기록 재발생\\n\\n해당 구역은 폐쇄 이후 출입한 사람이 없어야 한다. 그런데 안쪽에서 문을 두드리는 소리가 들린다는 보고가 계속 들어온다. 격리실의 상태를 확인하러 갈 인원은 더 이상 없다.\\n\\n관리자는 모든 상황을 보고받고 있을 것이다. 그렇지 않고서야 왜 아무런 명령도 내리지 않는가? 우리가 무엇을 잘못했기에 이곳에 남겨진 건가?\\n\\n[손으로 덧쓴 문장] 문을 열지 말 것. 안에서 들리는 목소리가 동료의 목소리와 같더라도.',foot:'자동 기록 일부는 반복 신호로 덮어쓰기 되었음. 수기 메모의 필체는 동일 작성자로 추정.'},
+memo:{id:'S12-031',title:'직원 간 내부 회람',meta:'작성자: 잔류 직원 공동 작성　 /　 작성일: 20██.██.██　 /　 보존 등급: 내부',body:'수신: 12구 시설 잔류 직원\\n발신: 임시 연락 담당자\\n제목: 관리자 및 중앙 관리부에 대한 공동 질의\\n\\n우리는 아직 이곳에 남아 있다. 식량과 비상 전력은 줄어들고 있으며, 격리 구역의 경보는 멈추지 않는다. 그럼에도 관리자의 지시는 한 번도 도착하지 않았다.\\n\\n처음에는 통신 장애라고 생각했다. 다음에는 구조대가 오고 있다고 믿었다. 이제는 어느 쪽도 믿을 수 없다. 관리자는 우리의 상황을 알고 있는가? 알고도 침묵하는 것인가?\\n\\n우리를 이곳에 남겨 둔 사람이 관리자라면, 적어도 이유를 설명해야 한다. 우리는 명령을 따랐고, 맡은 일을 수행했으며, 회사가 요구한 모든 절차를 지켰다. 그런데 왜 마지막 순간에 우리만 버려졌는가?\\n\\n[다른 필체로 추가됨]\\n그 사람은 우리를 보고 있지 않아. 처음부터 우리는 숫자였을 뿐이야.\\n\\n[마지막 줄, 잉크 번짐]\\n관리자. 이 글을 읽고 있다면 대답해. 제발 한 번만 대답해.',foot:'회람 수신 확인란: 서명 6개. 이 중 2명의 서명은 기존 인사 기록과 대조되지 않음.'},
+final:{id:'S12-099',title:'최종 구조 요청서',meta:'작성자: 기록관리실 잔류 담당자　 /　 작성일: 확인 불가　 /　 보존 등급: 최종',body:'이 문서를 누군가 발견한다면, 우리는 더 이상 이곳에 없을 가능성이 높다.\\n\\n처음에는 관리자가 우리를 구하러 올 것이라고 생각했다. 이후에는 우리를 잊었다고 생각했고, 지금은 애초에 우리를 구할 생각이 없었던 것은 아닌지 의심한다. 어느 쪽이든 대답은 돌아오지 않았다.\\n\\n우리는 문을 두드리는 소리와 복도 너머의 발소리 사이에서 하루를 구분한다. 격리실의 상태를 확인할 수도, 동료의 생사를 확인할 수도 없다. 회사가 우리에게 가르친 것은 환상체를 관리하는 법이었지만, 정작 우리는 그들과 같은 폐쇄된 공간에 남겨졌다.\\n\\n마지막으로 남길 문장을 복원할 수 있도록, 문서 뒷면에 직원용 행정 양식의 일부를 붙여 둔다. 본문에 남은 분류 코드를 확인하고, 복구 기준표에서 대응하는 표현을 찾아 문장 순서대로 이어 붙일 것. 조각의 어미와 문장 부호는 본문에 남아 있다.\\n\\n[본문 결손부]\\n우리는 과거를 [P-17]며, 미래를 [F-04]하는 [O-01]을 잃지 말아야 한다.\\n\\n[문서 하단, 작성자의 필체]\\n만약 누군가가 이 글을 본다면, 우리를 구해주소서. 신께서 우리를 굽어 살피시기를.',foot:'문서 뒷면에 직원용 복구 기준표가 함께 보존되어 있음. 아래의 기준표는 본문에 표시된 코드의 의미를 복원하기 위한 자료임.',extra:'<div class="form-copy"><h3>첨부 양식 // 문서 복구 기준표</h3><p>※ 본문에 남은 코드와 동일한 항목을 찾아, 표시된 복원어를 문장 순서대로 옮길 것. 분류 번호는 문서의 순서가 아니며, 본문에 적힌 코드만 사용한다.</p><table class="code-table"><thead><tr><th>분류 코드</th><th>행정 항목</th><th>복원어</th></tr></thead><tbody><tr><td class="code-mark">P-17</td><td>과거 기록 처리 원칙<br><span class="pencil">기록을 부정하거나 폐기하지 않고 받아들이는 태도</span></td><td>받아들이</td></tr><tr><td class="code-mark">F-04</td><td>미래 업무 수행 원칙<br><span class="pencil">아직 존재하지 않는 것을 새롭게 만들어 내는 행위</span></td><td>창조</td></tr><tr><td class="code-mark">O-01</td><td>최종 관찰 항목<br><span class="pencil">세상을 바라보는 기관</span></td><td>눈</td></tr><tr><td class="code-mark">R-12</td><td>기록물 폐기 절차</td><td>보류</td></tr></tbody></table><p>복원 순서: 본문 첫 번째 코드 → 두 번째 코드 → 세 번째 코드. 본문에 남아 있는 조사와 어미를 그대로 유지할 것.</p></div>'}
 };
 const $=id=>document.getElementById(id);
-function openDoc(key){const d=docs[key];if(!d)return;$('home').classList.add('hidden');$('sealed').classList.add('hidden');$('reader').classList.remove('hidden');$('r-id').textContent=d.id;$('r-title').textContent=d.title;$('r-meta').textContent=d.meta;$('r-body').textContent=d.body;$('r-foot').textContent=d.foot;$('crumb').textContent='ARCHIVE://SECTOR-12/'+d.id;document.querySelectorAll('.navbtn').forEach(b=>b.classList.toggle('active',b.dataset.page===key));}
+function openDoc(key){const d=docs[key];if(!d)return;$('home').classList.add('hidden');$('sealed').classList.add('hidden');$('reader').classList.remove('hidden');$('r-id').textContent=d.id;$('r-title').textContent=d.title;$('r-meta').textContent=d.meta;$('r-body').textContent=d.body;if(d.extra)$('r-body').insertAdjacentHTML('beforeend',d.extra);$('r-foot').textContent=d.foot;$('crumb').textContent='ARCHIVE://SECTOR-12/'+d.id;document.querySelectorAll('.navbtn').forEach(b=>b.classList.toggle('active',b.dataset.page===key));}
 function showPage(key){$('reader').classList.add('hidden');$('home').classList.toggle('hidden',key!=='home');$('sealed').classList.toggle('hidden',key!=='sealed');$('crumb').textContent='ARCHIVE://SECTOR-12/'+key.toUpperCase();document.querySelectorAll('.navbtn').forEach(b=>b.classList.toggle('active',b.dataset.page===key));}
 document.querySelectorAll('.navbtn').forEach(b=>b.addEventListener('click',()=>{const k=b.dataset.page;if(docs[k])openDoc(k);else showPage(k);}));
 document.querySelectorAll('[data-open]').forEach(b=>b.addEventListener('click',()=>openDoc(b.dataset.open)));
 $('back').addEventListener('click',()=>showPage('home'));
 $('search').addEventListener('input',e=>{const q=e.target.value.trim().toLowerCase();document.querySelectorAll('#docList .doc').forEach(d=>d.classList.toggle('hidden',!d.innerText.toLowerCase().includes(q)));});
-function unlock(){const value=$('pass').value.trim();if(value==='굴레를 끊어내며, 공포를 직면하는 눈'){$('lockbox').classList.add('hidden');$('secretDoc').style.display='block';$('error').textContent='';$('crumb').textContent='ARCHIVE://SECTOR-12/RESTRICTED';}else{$('error').textContent='승인 문구가 일치하지 않습니다.';}}
+function unlock(){const value=$('pass').value.trim();if(value==='과거를 받아들이며, 미래를 창조하는 눈.'){$('lockbox').classList.add('hidden');$('secretDoc').style.display='block';$('error').textContent='';$('crumb').textContent='ARCHIVE://SECTOR-12/RESTRICTED';}else{$('error').textContent='복원 문구가 일치하지 않습니다.';}}
 $('unlock').addEventListener('click',unlock);$('pass').addEventListener('keydown',e=>{if(e.key==='Enter')unlock();});
 </script>
 </body>
