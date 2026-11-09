@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#d8ceb5">
+<title>12구 폐쇄부지 기록 보관소</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+:root{--paper:#e8dfc9;--paper2:#f0e9d8;--ink:#292820;--muted:#77705f;--red:#8b3028;--line:#b8ad96;--shadow:rgba(39,32,20,.18)}
+*{box-sizing:border-box}body{margin:0;background:#302f2a;color:var(--ink);font-family:'Gowun Batang',serif;min-height:100vh;padding:26px 14px 50px}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.12;background-image:repeating-linear-gradient(0deg,transparent 0 3px,rgba(255,255,255,.12) 4px),radial-gradient(ellipse at 20% 10%,#a99c7d 0,transparent 45%);mix-blend-mode:screen}
+.shell{max-width:1160px;margin:auto;background:var(--paper);min-height:calc(100vh - 76px);box-shadow:0 16px 55px #0008;border:1px solid #a69b83;position:relative}
+.shell:after{content:"";position:absolute;inset:9px;border:1px solid #c7bca4;pointer-events:none}
+.top{padding:28px 38px 20px;border-bottom:3px double var(--line);position:relative}
+.kicker,.mono,.meta,.doc-id,.stamp,.navbtn,.search,button,input{font-family:'IBM Plex Mono',monospace}
+.kicker{font-size:11px;letter-spacing:2px;color:var(--red);font-weight:600}
+h1{font-size:clamp(25px,4vw,39px);letter-spacing:2px;margin:10px 0 5px;font-weight:700}
+.subtitle{font-size:13px;color:var(--muted);letter-spacing:1px}
+.status{position:absolute;right:40px;top:34px;border:1px solid var(--red);color:var(--red);padding:7px 10px;font:11px 'IBM Plex Mono';transform:rotate(3deg)}
+.layout{display:grid;grid-template-columns:260px 1fr;min-height:660px}
+aside{padding:25px 20px;border-right:1px solid var(--line);background:#ded4bd}
+.sidehead{font-size:11px;color:var(--muted);letter-spacing:1.5px;margin:0 0 13px}
+.navbtn{display:block;width:100%;text-align:left;background:transparent;border:0;border-bottom:1px dotted #aaa087;padding:12px 8px;color:#494536;font-size:12px;cursor:pointer}
+.navbtn:hover,.navbtn.active{background:#cfc3a9;color:#721f1b}
+.navbtn small{display:block;font-size:10px;color:#827965;margin-top:4px}
+.archive-note{margin-top:32px;padding:13px;border:1px solid #b9ad94;font-size:12px;line-height:1.7;color:#6f6858;background:#e7deca}
+main{padding:28px 34px 48px;min-width:0}
+.toolbar{display:flex;gap:10px;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line);padding-bottom:14px;margin-bottom:20px;flex-wrap:wrap}
+.breadcrumb{font:11px 'IBM Plex Mono';color:#77705f}
+.search{background:#f3eddf;border:1px solid var(--line);padding:9px 11px;width:min(260px,100%);font-size:11px;color:var(--ink);outline:none}
+.search:focus{border-color:var(--red)}
+.welcome{padding:24px 26px;background:var(--paper2);border:1px solid var(--line);box-shadow:3px 4px 0 #c9bea7;margin-bottom:22px}
+.welcome h2{font-size:22px;margin:0 0 12px}
+.welcome p{font-size:14px;line-height:1.9;margin:6px 0;color:#504b3e}
+.stamp{display:inline-block;border:2px solid var(--red);color:var(--red);padding:5px 8px;font-size:10px;letter-spacing:1px;transform:rotate(-2deg);margin:10px 0 0}
+.section-title{font-size:13px;letter-spacing:2px;border-bottom:2px solid #6e6858;padding-bottom:9px;margin:26px 0 12px}
+.doc-list{display:grid;gap:9px}
+.doc{display:grid;grid-template-columns:78px 1fr auto;gap:13px;align-items:center;padding:13px 14px;background:#eee6d4;border:1px solid #c8bda5;cursor:pointer;transition:background .15s}
+.doc:hover{background:#e1d5bd}
+.doc-id{font-size:10px;color:var(--red)}
+.doc-title{font-size:14px;font-weight:700}
+.doc-desc{font-size:11px;color:#77705f;margin-top:4px}
+.doc-tag{font:10px 'IBM Plex Mono';color:#776f5d;border:1px solid #c3b79f;padding:4px 6px}
+.paper{background:#f1eadb;border:1px solid #c9bea7;padding:clamp(18px,4vw,36px);box-shadow:4px 5px 0 #c7bca5;position:relative;max-width:850px}
+.paper:before{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;background:#9a3b32;opacity:.7}
+.paper-head{border-bottom:1px solid #aaa087;padding-bottom:15px;margin-bottom:20px}
+.paper-head h2{font-size:23px;margin:8px 0}
+.meta{display:flex;gap:10px 22px;flex-wrap:wrap;font-size:10px;color:#776f5e}
+.paper-body{font-size:14px;line-height:2.05;white-space:pre-line}
+.paper-body p{margin:0 0 15px}
+.footnote{margin-top:30px;padding-top:12px;border-top:1px dashed #b8ad96;font-size:11px;color:#77705f;line-height:1.8}
+.back{background:transparent;border:1px solid #8e866f;color:#514b3e;padding:8px 12px;font-size:11px;cursor:pointer;margin-bottom:17px}
+.back:hover{background:#e0d6c1}
+.lockbox{max-width:520px;margin:45px auto;padding:28px;background:#e2d8c2;border:1px solid #aa9e84;text-align:center}
+.lockbox h2{font-size:21px;margin:0 0 10px}
+.lockbox p{font-size:13px;line-height:1.8;color:#6b6455}
+.lockrow{display:flex;gap:8px;margin-top:20px}
+.lockrow input{flex:1;min-width:0;padding:11px;background:#f4eddd;border:1px solid #a99e86;font-size:12px}
+.lockrow button,.action{background:#514b3e;color:#f1eadb;border:0;padding:11px 15px;font-size:11px;cursor:pointer}
+.lockrow button:hover,.action:hover{background:#7d3029}
+#error{font-size:11px;color:var(--red);min-height:18px;margin-top:10px}
+.secret{display:none}
+.footer{padding:16px 36px;border-top:3px double var(--line);font:10px 'IBM Plex Mono';color:#827965;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.hidden{display:none!important}
+@media(max-width:760px){body{padding:0}.shell{min-height:100vh}.top{padding:23px 22px}.status{position:static;display:inline-block;margin-top:12px}.layout{grid-template-columns:1fr}aside{border-right:0;border-bottom:1px solid var(--line);padding:16px 18px}.navlist{display:grid;grid-template-columns:1fr 1fr;gap:0 10px}.archive-note{margin-top:15px}main{padding:22px 17px 35px}.doc{grid-template-columns:60px 1fr}.doc-tag{display:none}.footer{padding:15px 20px}}
+</style>
+</head>
+<body>
+<div class="shell">
+<header class="top">
+<div class="kicker">LOBOTOMY CORPORATION · INTERNAL RECORDS DIVISION</div>
+<h1>12구 폐쇄부지 기록 보관소</h1>
+<div class="subtitle">SECTOR 12 / CLOSED SITE DOCUMENT ARCHIVE</div>
+<div class="status">열람 제한 · ARCHIVE ONLY</div>
+</header>
+<div class="layout">
+<aside>
+<p class="sidehead">ARCHIVE INDEX / 목차</p>
+<div class="navlist">
+<button class="navbtn active" data-page="home">보관소 안내<small>ARCHIVE OVERVIEW</small></button>
+<button class="navbtn" data-page="incident">폐쇄 경위<small>INCIDENT REPORT</small></button>
+<button class="navbtn" data-page="staff">인원 기록<small>PERSONNEL FILE</small></button>
+<button class="navbtn" data-page="maintenance">시설 점검표<small>MAINTENANCE LOG</small></button>
+<button class="navbtn" data-page="memo">내부 회람 문서<small>INTERNAL MEMO</small></button>
+<button class="navbtn" data-page="sealed">봉인 문서<small>RESTRICTED FILE</small></button>
+</div>
+<div class="archive-note">본 보관소는 12구 폐쇄부지와 관련된 잔존 문서를 보존하기 위해 개설되었습니다.<br><br>문서의 누락 및 훼손은 원본의 상태를 반영할 수 있습니다.</div>
+</aside>
+<main>
+<div class="toolbar"><div class="breadcrumb" id="crumb">ARCHIVE://SECTOR-12/INDEX</div><input class="search" id="search" placeholder="문서 제목 검색..." aria-label="문서 제목 검색"></div>
+<section id="home">
+<div class="welcome">
+<h2>기록 보관소 열람 안내</h2>
+<p>12구 폐쇄부지에서 회수된 문서의 사본을 보관하는 내부 열람용 페이지입니다.</p>
+<p>일부 기록은 보존 상태가 좋지 않으며, 작성자의 판단에 따라 내용이 삭제되거나 수정되었을 가능성이 있습니다.</p>
+<p>문서의 작성 일자와 열람 등급을 확인한 뒤 필요한 기록을 열람하십시오.</p>
+<div class="stamp">폐쇄 구역 / 외부 반출 금지</div>
+</div>
+<div class="section-title">최근 등록된 기록 / RECENTLY CATALOGUED</div>
+<div class="doc-list" id="docList">
+<div class="doc" data-open="incident"><div class="doc-id">S12-001</div><div><div class="doc-title">12구 폐쇄부지 최종 상황 보고</div><div class="doc-desc">시설 폐쇄 직전의 상황을 정리한 보고서</div></div><div class="doc-tag">열람 가능</div></div>
+<div class="doc" data-open="staff"><div class="doc-id">S12-014</div><div><div class="doc-title">잔류 인원 확인 기록</div><div class="doc-desc">폐쇄 당시 확인된 인원 및 미확인 인원</div></div><div class="doc-tag">일반</div></div>
+<div class="doc" data-open="maintenance"><div class="doc-id">S12-022</div><div><div class="doc-title">비상 전력 및 통신 설비 점검표</div><div class="doc-desc">전력 차단 이후 수집된 자동 점검 기록</div></div><div class="doc-tag">일반</div></div>
+<div class="doc" data-open="memo"><div class="doc-id">S12-031</div><div><div class="doc-title">폐쇄 전 내부 회람</div><div class="doc-desc">관리 부서에서 각 팀으로 전달된 공지</div></div><div class="doc-tag">주의</div></div>
+</div>
+</section>
+<section id="reader" class="hidden">
+<button class="back" id="back">← 목록으로</button>
+<article class="paper"><div class="paper-head"><div class="kicker" id="r-id">DOCUMENT</div><h2 id="r-title"></h2><div class="meta" id="r-meta"></div></div><div class="paper-body" id="r-body"></div><div class="footnote" id="r-foot"></div></article>
+</section>
+<section id="sealed" class="hidden">
+<div class="lockbox" id="lockbox">
+<div class="kicker">RESTRICTED ARCHIVE / LEVEL 4</div><h2>봉인 문서 열람</h2>
+<p>해당 문서는 별도 승인 문구가 확인된 경우에만 열람할 수 있습니다.<br>승인 문구를 입력하십시오.</p>
+<div class="lockrow"><input id="pass" type="password" placeholder="승인 문구 입력" autocomplete="off"><button id="unlock">확인</button></div><div id="error"></div>
+</div>
+<div class="paper secret" id="secretDoc"><div class="paper-head"><div class="kicker">S12-099 / RESTRICTED</div><h2>폐쇄부지 최종 보존 지침 — 부록</h2><div class="meta"><span>작성 부서: 중앙 기록관리실</span><span>작성일: 20██.██.██</span><span>보존 등급: LEVEL 4</span></div></div>
+<div class="paper-body"><p>본 문서는 12구 폐쇄부지의 잔존 기록을 인계받은 담당자를 위한 부록이다.</p><p>기록을 정리하는 과정에서 서로 모순되는 진술이 다수 발견되었다. 특히 폐쇄 당일의 출입 인원, 최종 방송 시각, 그리고 지하 구역의 전력 사용 기록은 서로 일치하지 않는다.</p><p>그러므로 단일 문서만을 근거로 당시의 상황을 단정하지 말 것. 서로 다른 부서에서 작성된 기록을 대조하고, 누락된 시간대를 확인한 뒤 판단할 것.</p><p>마지막으로, 폐쇄부지의 기록은 사건의 순서가 아니라 남겨진 흔적의 순서로 정리되어 있다.</p></div>
+<div class="footnote">부록 끝. 본 문서의 사본은 기록관리실 외부로 반출할 수 없다.</div></div>
+</section>
+</main>
+</div>
+<footer class="footer"><span>DOCSYS S12-ARCHIVE // BUILD 04.17</span><span>UNAUTHORIZED ACCESS WILL BE RECORDED</span><span>© INTERNAL USE ONLY</span></footer>
+</div>
+<script>
+const docs={
+incident:{id:'S12-001',title:'12구 폐쇄부지 최종 상황 보고',meta:'작성 부서: 시설관리본부　 /　 작성일: 20██.██.██　 /　 보존 등급: 일반',body:'보고 대상: 중앙 관리부\n\n12구 시설의 운영 중단 및 폐쇄 절차가 예정대로 진행되었다. 외부 출입 통제는 최종 폐쇄 시각을 기준으로 시행되었으며, 이후 구역 내 잔류 인원에 대한 확인 작업이 진행되었다.\n\n다만 최종 확인 과정에서 각 부서가 제출한 인원 현황에 차이가 발생했다. 시설관리본부는 해당 차이를 단순 집계 오류로 분류했으나, 인사관리부의 원본 기록에는 정정 내역이 남아 있지 않다.\n\n추가 조사 요청은 접수되었으나, 폐쇄 결정에 따라 후속 확인은 보류되었다.',foot:'첨부 자료: S12-014 잔류 인원 확인 기록 / 원본 서명란 일부 훼손'},
+staff:{id:'S12-014',title:'잔류 인원 확인 기록',meta:'작성 부서: 인사관리부　 /　 작성일: 20██.██.██　 /　 보존 등급: 일반',body:'폐쇄 절차에 앞서 작성된 잔류 인원 대조표의 요약본.\n\n주간 근무조: 전원 퇴실 확인\n야간 근무조: 일부 인원 확인 보류\n시설 유지보수팀: 최종 출입 기록과 대조 필요\n기록관리실: 인수인계 서류 미제출\n\n특이 사항: 야간 근무조의 출입 기록에는 같은 사원 번호가 서로 다른 시간대에 두 차례 기재되어 있다. 담당자는 기록 장치의 시간 오차 가능성을 보고했으나, 장치 점검 결과 이상은 발견되지 않았다.\n\n수기 명단의 마지막 줄에는 이름 대신 다음 문장이 기재되어 있다.\n“확인한 사람과 확인된 사람을 같은 것으로 취급하지 말 것.”',foot:'원본 대조표는 별도 보관. 본 요약본에는 개인정보가 포함되지 않음.'},
+maintenance:{id:'S12-022',title:'비상 전력 및 통신 설비 점검표',meta:'작성 부서: 설비기술팀　 /　 작성일: 20██.██.██　 /　 보존 등급: 일반',body:'[자동 기록 발췌]\n\n02:10　주 전력 계통 차단\n02:13　비상 전력 계통 전환 확인\n02:19　내부 통신망 응답 지연\n02:24　지하 구역 단말기 접속 기록 발생\n02:24　해당 구역은 폐쇄 절차에 따라 전원 차단 상태로 분류됨\n02:31　통신 응답 종료\n\n점검 의견: 전원 차단 상태로 분류된 구역에서 접속 기록이 생성된 원인을 확인할 수 없다. 로그 서버의 시각 동기화 상태는 정상으로 확인되었다.\n\n수기 메모: “응답이 온 것이 아니라, 종료되지 않은 연결이 남아 있었던 것일 수 있음.”',foot:'자동 기록 원본의 일부 구간은 저장 매체 손상으로 복구 불가.'},
+memo:{id:'S12-031',title:'폐쇄 전 내부 회람',meta:'작성 부서: 중앙 관리실　 /　 작성일: 20██.██.██　 /　 보존 등급: 주의',body:'수신: 각 부서 책임자\n발신: 중앙 관리실\n제목: 폐쇄 절차 중 기록물 취급에 관한 지침\n\n1. 폐쇄 절차 중 발견된 문서는 임의로 폐기하지 말 것.\n2. 서로 다른 부서의 기록이 상충할 경우, 어느 한쪽을 정답으로 간주하지 말고 원본을 함께 보존할 것.\n3. 시간 정보가 누락된 문서는 문서 번호와 작성 부서를 기준으로 별도 분류할 것.\n4. 기록의 열람 순서가 실제 사건의 발생 순서와 일치한다고 가정하지 말 것.\n\n추가 지시: 최종 인계 목록에 포함되지 않은 문서가 발견되더라도, 해당 문서의 존재를 부정하는 방식으로 보고서를 수정하지 말 것.',foot:'회람 수신 확인: 4개 부서 중 3개 부서 회신. 미회신 부서: 기록관리실'},
+};
+const $=id=>document.getElementById(id);
+function openDoc(key){const d=docs[key];if(!d)return;$('home').classList.add('hidden');$('sealed').classList.add('hidden');$('reader').classList.remove('hidden');$('r-id').textContent=d.id;$('r-title').textContent=d.title;$('r-meta').textContent=d.meta;$('r-body').textContent=d.body;$('r-foot').textContent=d.foot;$('crumb').textContent='ARCHIVE://SECTOR-12/'+d.id;document.querySelectorAll('.navbtn').forEach(b=>b.classList.toggle('active',b.dataset.page===key));}
+function showPage(key){$('reader').classList.add('hidden');$('home').classList.toggle('hidden',key!=='home');$('sealed').classList.toggle('hidden',key!=='sealed');$('crumb').textContent='ARCHIVE://SECTOR-12/'+key.toUpperCase();document.querySelectorAll('.navbtn').forEach(b=>b.classList.toggle('active',b.dataset.page===key));}
+document.querySelectorAll('.navbtn').forEach(b=>b.addEventListener('click',()=>{const k=b.dataset.page;if(docs[k])openDoc(k);else showPage(k);}));
+document.querySelectorAll('[data-open]').forEach(b=>b.addEventListener('click',()=>openDoc(b.dataset.open)));
+$('back').addEventListener('click',()=>showPage('home'));
+$('search').addEventListener('input',e=>{const q=e.target.value.trim().toLowerCase();document.querySelectorAll('#docList .doc').forEach(d=>d.classList.toggle('hidden',!d.innerText.toLowerCase().includes(q)));});
+function unlock(){const value=$('pass').value.trim();if(value==='굴레를 끊어내며, 공포를 직면하는 눈'){$('lockbox').classList.add('hidden');$('secretDoc').style.display='block';$('error').textContent='';$('crumb').textContent='ARCHIVE://SECTOR-12/RESTRICTED';}else{$('error').textContent='승인 문구가 일치하지 않습니다.';}}
+$('unlock').addEventListener('click',unlock);$('pass').addEventListener('keydown',e=>{if(e.key==='Enter')unlock();});
+</script>
+</body>
+</html>
