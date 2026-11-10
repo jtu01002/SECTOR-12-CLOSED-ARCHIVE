@@ -42,7 +42,13 @@ main{padding:28px 34px 48px;min-width:0}
 .doc-title{font-size:14px;font-weight:700}
 .doc-desc{font-size:11px;color:#77705f;margin-top:4px}
 .doc-tag{font:10px 'IBM Plex Mono';color:#776f5d;border:1px solid #c3b79f;padding:4px 6px}
-.paper{background:#f1eadb;border:1px solid #c9bea7;padding:clamp(18px,4vw,36px);box-shadow:4px 5px 0 #c7bca5;position:relative;max-width:850px}
+.paper{background-color:#f1eadb;background-image:radial-gradient(ellipse at 4% 8%,rgba(125,91,48,.18),transparent 23%),radial-gradient(ellipse at 96% 91%,rgba(115,82,43,.15),transparent 25%),linear-gradient(97deg,rgba(119,83,45,.055),transparent 12%,transparent 88%,rgba(119,83,45,.07)),repeating-linear-gradient(0deg,rgba(92,74,48,.018) 0 1px,transparent 1px 4px);border:1px solid #b9aa8b;padding:clamp(18px,4vw,36px);box-shadow:4px 5px 0 #b9ad96;position:relative;max-width:850px;overflow:hidden}
+.paper:after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.28;background:radial-gradient(ellipse 42px 24px at 88% 13%,rgba(91,35,27,.38),transparent 72%),radial-gradient(ellipse 25px 38px at 12% 78%,rgba(102,43,32,.27),transparent 70%),radial-gradient(ellipse 17px 11px at 76% 94%,rgba(86,34,28,.32),transparent 75%),radial-gradient(ellipse 58px 18px at 50% 0%,rgba(110,80,43,.18),transparent 78%),radial-gradient(ellipse 20px 13px at 98% 55%,rgba(90,40,31,.2),transparent 76%)}
+.paper>*{position:relative;z-index:1}
+.paper:before{z-index:2;pointer-events:none}
+.shell{background-image:radial-gradient(ellipse at 0% 0%,rgba(118,87,49,.16),transparent 30%),radial-gradient(ellipse at 100% 100%,rgba(105,73,39,.13),transparent 28%),repeating-linear-gradient(0deg,rgba(90,70,42,.018) 0 1px,transparent 1px 5px)}
+.welcome,.doc,.archive-note{background-image:radial-gradient(ellipse at 96% 12%,rgba(111,47,34,.12),transparent 22%),radial-gradient(ellipse at 7% 94%,rgba(118,88,49,.12),transparent 26%),repeating-linear-gradient(0deg,rgba(92,74,48,.018) 0 1px,transparent 1px 4px)}
+/* Subtle aged-paper wear: foxing, faded edges, and small dried reddish-brown stains. */
 .paper:before{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;background:#9a3b32;opacity:.7}
 .paper-head{border-bottom:1px solid #aaa087;padding-bottom:15px;margin-bottom:20px}
 .paper-head h2{font-size:23px;margin:8px 0}
